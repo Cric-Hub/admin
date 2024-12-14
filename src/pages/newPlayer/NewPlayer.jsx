@@ -3,10 +3,60 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState } from "react";
+import useFetch from "../../hooks/useFetch.js";
+import axios from "axios";
 
 const NewPlayer = ({ inputs, title }) => {
+  const [info, setInfo] = useState({});
   const [file, setFile] = useState("");
+  const [clubID, setClubID] = useState(undefined);
+  const {data, loading, error} = useFetch("http://localhost:8000/api/clubs");
 
+  const handleChange = (e) => {
+    setInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  }
+const handleClick = async (e) => {
+  e.preventDefault();
+  if (!info.name || !clubID) {
+    alert("Please complete all fields!");
+    return;
+  }
+
+  let imageUrl = "";
+  if (file) {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "upload");
+
+    try {
+      const uploadRes = await axios.post(
+        "https://api.cloudinary.com/v1_1/hashanthapramod/image/upload",
+        formData
+      );
+      imageUrl = uploadRes.data.url;
+    } catch (err) {
+      console.error("Error uploading image:", err);
+      alert("Image upload failed!");
+      return;
+    }
+  }
+
+  const player = {
+    name: info.name,
+    club: clubID,
+    img: imageUrl,
+  };
+
+  try {
+    await axios.post("http://localhost:8000/api/players", player);
+    alert("Player created successfully!");
+  } catch (err) {
+    console.error("Error creating player:", err);
+    alert("Failed to create player. Please try again.");
+  }
+};
+
+  console.log(info);
   return (
     <div className="new">
       <Sidebar />
@@ -43,10 +93,30 @@ const NewPlayer = ({ inputs, title }) => {
               {inputs.map((input) => (
                 <div className="formInput" key={input.id}>
                   <label>{input.label}</label>
-                  <input type={input.type} placeholder={input.placeholder} />
+                  <input type={input.type} 
+                  onChange={handleChange}
+                  name={input.label.toLowerCase()} 
+                  id={input.id}
+                  placeholder={input.placeholder} />
                 </div>
               ))}
-              <button>Send</button>
+              <div className="formInput">
+                  <label>Select Club</label>
+                  <select id="clubID" onChange={(e) => setClubID(e.target.value)} value={clubID || ""}>
+                    <option value="" disabled>Select a Club</option>
+                    {loading
+                      ? "loading"
+                      : data &&
+                        data.map((club) => (
+                          <option key={club._id} value={club._id}>
+                            {club.name}
+                          </option>
+                        ))}
+                  </select>
+                </div>
+              <button onClick={handleClick} disabled={!info.name || !clubID}>
+                {loading ? "Submitting..." : "Send"}
+              </button>
             </form>
           </div>
         </div>

@@ -7,13 +7,15 @@ import useFetch from "../../hooks/useFetch.js";
 import { use } from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext.js";
 
-const Datatable = ({ columns}) => {
-  
+const DatatableClub = ({ columns}) => {
+  const { user } = useContext(AuthContext);
   const location = useLocation();
   const path = location.pathname.split("/")[1];
   const [list, setList] = useState([]);
-  const {data, loading, error} = useFetch(`http://localhost:8000/api/${path}`);
+  const { data, loading, error } = useFetch(`http://localhost:8000/api/${path}/by-club?clubId=${user.club}`);
 
   useEffect(() => {
     setList(data);
@@ -72,4 +74,4 @@ const Datatable = ({ columns}) => {
   );
 };
 
-export default Datatable;
+export default DatatableClub;

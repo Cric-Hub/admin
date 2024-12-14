@@ -17,8 +17,13 @@ import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext.js";
 
 const Sidebar = () => {
-  const { user } = useContext(AuthContext);
-  const { dispatch } = useContext(DarkModeContext);
+  const { user, dispatch } = useContext(AuthContext);
+  const { dispatchDarkMode } = useContext(DarkModeContext);
+  
+
+  const handleLogout = () => {
+    dispatch({ type: "LOGOUT" });
+  }
   return (
     <div className="sidebar">
       <div className="top">
@@ -27,14 +32,17 @@ const Sidebar = () => {
         </Link>
       </div>
       <hr />
+
       <div className="center">
         <ul>
           <p className="title">MAIN</p>
+          <Link to="/" style={{ textDecoration: "none" }}>
           <li>
             <DashboardIcon className="icon" />
             <span>Dashboard</span>
           </li>
-          <p className="title">LISTS</p>
+          </Link>
+          <p className="title">SYSTEM</p>
 
           {user && user.isAdmin &&(<Link to="/users" style={{ textDecoration: "none" }}>
             <li>
@@ -57,8 +65,8 @@ const Sidebar = () => {
             </li>
           </Link>)}
 
-
-          <Link to="/clubs/:id" style={{ textDecoration: "none" }}>
+            <p className="title">CLUB</p>
+          <Link to={`/players/by-club?clubId=${user.club}`} style={{ textDecoration: "none" }}>
             <li>
               <StoreIcon className="icon" />
               <span>My Club</span>
@@ -66,7 +74,7 @@ const Sidebar = () => {
           </Link>
           <li>
             <CreditCardIcon className="icon" />
-            <span>Orders</span>
+            <span>Match</span>
           </li>
           <li>
             <LocalShippingIcon className="icon" />
@@ -83,14 +91,6 @@ const Sidebar = () => {
           </li>
           <p className="title">SERVICE</p>
           <li>
-            <SettingsSystemDaydreamOutlinedIcon className="icon" />
-            <span>System Health</span>
-          </li>
-          <li>
-            <PsychologyOutlinedIcon className="icon" />
-            <span>Logs</span>
-          </li>
-          <li>
             <SettingsApplicationsIcon className="icon" />
             <span>Settings</span>
           </li>
@@ -99,7 +99,7 @@ const Sidebar = () => {
             <AccountCircleOutlinedIcon className="icon" />
             <span>Profile</span>
           </li>
-          <li>
+          <li onClick={handleLogout}>
             <ExitToAppIcon className="icon" />
             <span>Logout</span>
           </li>
@@ -108,11 +108,11 @@ const Sidebar = () => {
       <div className="bottom">
         <div
           className="colorOption"
-          onClick={() => dispatch({ type: "LIGHT" })}
+          onClick={() => dispatchDarkMode({ type: "LIGHT" })}
         ></div>
         <div
           className="colorOption"
-          onClick={() => dispatch({ type: "DARK" })}
+          onClick={() => dispatchDarkMode({ type: "DARK" })}
         ></div>
       </div>
     </div>
