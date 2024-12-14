@@ -37,5 +37,35 @@ export const clubColumns = [
     field: "location",
     headerName: "Location",
     width: 230,
+    
+  },
+];
+
+export const playerColumns = [
+  { field: "_id", headerName: "ID", width: 70 },
+  {
+    field: "name",
+    headerName: "Name",
+    width: 230,
+  },
+  {
+    field: "club",
+    headerName: "Club",
+    width: 230,
+  },
+];
+
+
+export const clubPlayerColumns = [
+  { field: "_id", headerName: "ID", width: 70 },
+  {
+    field: "name",
+    headerName: "Name",
+    width: 230,
+  },
+  {
+    field: "club",
+    headerName: "Club",
+    width: 230,
   },
 ];

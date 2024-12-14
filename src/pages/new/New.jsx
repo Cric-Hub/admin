@@ -4,36 +4,53 @@ import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState } from "react";
 import axios from "axios";
+import useFetch from "../../hooks/useFetch";
+import { useToast } from "../../context/ToastContext";
 
 const New = ({ inputs, title }) => {
   const [file, setFile] = useState("");
   const [info, setInfo] = useState({});
+  const [clubID, setClubID] = useState(undefined);
+  const {data, loading, error} = useFetch("http://localhost:8000/api/clubs");
+  const showToast = useToast();
 
   const handleChange = (e) => {
     setInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleClick = async (e) => {
-    e.preventDefault();
-    const data = new FormData();
-    data.append("file", file);
-    data.append("upload_preset", "upload");
-    try {
-      const uploadRes = await axios.post(
-        "https://api.cloudinary.com/v1_1/hashanthapramod/image/upload",
-        data);
-        const { url } = uploadRes.data;
+const handleClick = async (e) => {
+  e.preventDefault();
 
-        const newUser = {
-          ...info,
-          img: url,
-        };
+  if (!clubID) {
+    showToast("Please select a club before submitting!", "warn");
+    return;
+  }
 
-        await axios.post("http://localhost:8000/api/auth/register", newUser);
-    } catch (err) {
-      console.log(err);
-    }  
-  };
+  const data = new FormData();
+  data.append("file", file);
+  data.append("upload_preset", "upload");
+
+  try {
+    const uploadRes = await axios.post(
+      "https://api.cloudinary.com/v1_1/hashanthapramod/image/upload",
+      data
+    );
+    const { url } = uploadRes.data;
+
+    const newUser = {
+      ...info,
+      img: url,
+      club: clubID,
+    };
+
+    await axios.post("http://localhost:8000/api/auth/register", newUser);
+    showToast("User created successfully!!", "success");
+  } catch (err) {
+    console.log(err);
+    alert("Something went wrong while registering the user!");
+  }
+};
+
   console.log(info);
   return (
     <div className="new">
@@ -78,6 +95,22 @@ const New = ({ inputs, title }) => {
                   id={input.id}/>
                 </div>
               ))}
+              <div className="formInput">
+                  <label>Select Club</label>
+                  <select id="clubID" onChange={(e) => setClubID(e.target.value)} value={clubID || ""}>
+                    <option value="" disabled>
+                      Select a Club
+                    </option>
+                    {loading
+                      ? "loading"
+                      : data &&
+                        data.map((club) => (
+                          <option key={club._id} value={club._id}>
+                            {club.name}
+                          </option>
+                        ))}
+                  </select>
+                </div>
               <button onClick={handleClick}>Send</button>
             </form>
           </div>

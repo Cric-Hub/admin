@@ -24,36 +24,27 @@ export const userInputs = [
     },
   ];
   
-  export const productInputs = [
+
+    export const playerInputs = [
     {
       id: 1,
-      label: "Title",
+      label: "Name",
       type: "text",
-      placeholder: "Apple Macbook Pro",
-    },
-    {
-      id: 2,
-      label: "Description",
-      type: "text",
-      placeholder: "Description",
-    },
-    {
-      id: 3,
-      label: "Category",
-      type: "text",
-      placeholder: "Computers",
-    },
-    {
-      id: 4,
-      label: "Price",
-      type: "text",
-      placeholder: "100",
-    },
-    {
-      id: 5,
-      label: "Stock",
-      type: "text",
-      placeholder: "in stock",
-    },
+      placeholder: "pramod",
+    }
   ];
   
+      export const clubInputs = [
+    {
+      id: 1,
+      label: "Name",
+      type: "text",
+      placeholder: "superSixes",
+    },
+        {
+      id: 2,
+      label: "location",
+      type: "text",
+      placeholder: "Polonnaruwa",
+    }
+  ];
