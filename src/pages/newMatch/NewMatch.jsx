@@ -1,4 +1,4 @@
-import "./newMatch.scss";
+//import "./newMatch.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import { useState } from "react";
