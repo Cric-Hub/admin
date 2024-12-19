@@ -42,7 +42,7 @@ const Sidebar = () => {
             <span>Dashboard</span>
           </li>
           </Link>
-          <p className="title">SYSTEM</p>
+          {user && user.isAdmin &&(<p className="title">SYSTEM</p>)}
 
           {user && user.isAdmin &&(<Link to="/users" style={{ textDecoration: "none" }}>
             <li>
@@ -65,30 +65,26 @@ const Sidebar = () => {
             </li>
           </Link>)}
 
-            <p className="title">CLUB</p>
-          <Link to={`/players/by-club?clubId=${user.club}`} style={{ textDecoration: "none" }}>
+          {user && user.isAdmin &&(<Link to="/matches" style={{ textDecoration: "none" }}>
             <li>
               <StoreIcon className="icon" />
-              <span>My Club</span>
+              <span>Matches</span>
+            </li>
+          </Link>)}
+
+            <p className="title">My CLUB</p>
+          <Link to={`/players/by-club/${user.club}`} style={{ textDecoration: "none" }}>
+            <li>
+              <StoreIcon className="icon" />
+              <span>Players</span>
             </li>
           </Link>
+          <Link to={`/matches/by-club/${user.club}`} style={{ textDecoration: "none" }}>
           <li>
             <CreditCardIcon className="icon" />
             <span>Match</span>
           </li>
-          <li>
-            <LocalShippingIcon className="icon" />
-            <span>Delivery</span>
-          </li>
-          <p className="title">USEFUL</p>
-          <li>
-            <InsertChartIcon className="icon" />
-            <span>Stats</span>
-          </li>
-          <li>
-            <NotificationsNoneIcon className="icon" />
-            <span>Notifications</span>
-          </li>
+          </Link>
           <p className="title">SERVICE</p>
           <li>
             <SettingsApplicationsIcon className="icon" />

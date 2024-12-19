@@ -14,8 +14,9 @@ const DatatableClub = ({ columns}) => {
   const { user } = useContext(AuthContext);
   const location = useLocation();
   const path = location.pathname.split("/")[1];
+  const id = location.pathname.split("/")[2];
   const [list, setList] = useState([]);
-  const { data, loading, error } = useFetch(`http://localhost:8000/api/${path}/by-club?clubId=${user.club}`);
+  const { data, loading, error } = useFetch(`http://localhost:8000/api/${path}/by-club/${user.club}`);
 
   useEffect(() => {
     setList(data);
@@ -39,7 +40,7 @@ const DatatableClub = ({ columns}) => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Link to="/users/test" style={{ textDecoration: "none" }}>
+            <Link  to={`/${path}/${params.row._id}`} style={{ textDecoration: "none" }}>
               <div className="viewButton">View</div>
             </Link>
             <div
@@ -57,7 +58,7 @@ const DatatableClub = ({ columns}) => {
     <div className="datatable">
       <div className="datatableTitle">
         {path}
-        <Link to={`/${path}/new`} className="link">
+        <Link to={`/${path}/by-club/${id}/new`} className="link">
           Add New
         </Link>
       </div>
