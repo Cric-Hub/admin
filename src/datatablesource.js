@@ -55,8 +55,37 @@ export const playerColumns = [
   },
 ];
 
+export const matchColumns = [
+  { field: "_id", headerName: "ID", width: 70 },
+  {
+    field: "name",
+    headerName: "Name",
+    width: 230,
+  },
+  {
+    field: "club",
+    headerName: "Club",
+    width: 230,
+  },
+];
+
 
 export const clubPlayerColumns = [
+  { field: "_id", headerName: "ID", width: 70 },
+  {
+    field: "name",
+    headerName: "Name",
+    width: 230,
+  },
+  {
+    field: "club",
+    headerName: "Club",
+    width: 230,
+  },
+];
+
+
+export const clubMatchColumns = [
   { field: "_id", headerName: "ID", width: 70 },
   {
     field: "name",

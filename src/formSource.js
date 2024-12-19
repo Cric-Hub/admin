@@ -48,3 +48,11 @@ export const userInputs = [
       placeholder: "Polonnaruwa",
     }
   ];
+
+  export const matchInputs = [
+    {
+      id: 1,
+      label: "Overs",
+      type: "text",
+      placeholder: "20",
+    },]
