@@ -6,7 +6,7 @@ import { useContext } from "react"
 import { AuthContext } from "../../context/AuthContext"
 import axios from "axios"
 import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate,Link } from "react-router-dom"
 import { useToast } from "../../context/ToastContext";
 
 const openGmail = () => {
@@ -77,7 +77,7 @@ const Login = () => {
 
           <div className='remember-forgot'>
             <label><input type="checkbox" />Remember me</label>
-            <a href="#">Forgot password?</a>
+            <Link to="/forgot-password">Forgot Password</Link>
           </div>
 
           <button disabled={loading} onClick={handleClick} className="lButton">SignIn</button>

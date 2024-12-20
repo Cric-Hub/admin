@@ -26,7 +26,7 @@ const NewClub = ({ inputs, title }) => {
 
         const newClub = {
           ...info,
-          img: url,
+          image: url,
         };
 
         await axios.post("http://localhost:8000/api/clubs", newClub);

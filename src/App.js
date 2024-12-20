@@ -1,5 +1,7 @@
 import Home from "./pages/home/Home.jsx";
 import Login from "./pages/login/Login.jsx";
+import ForgotPassword from "./components/forgotPassword/ForgotPassword.jsx";
+import ResetPassword from "./components/resetPassword/ResetPassword.jsx";
 import List from "./pages/list/List.jsx";
 import ClubList from "./pages/list/ClubList.jsx";
 import MatchList from "./pages/list/MatchList.jsx";
@@ -29,6 +31,8 @@ function App() {
         <Routes>
           <Route path="/">
             <Route path="login" element={<Login />} />
+            <Route path="forgot-password" element={<ForgotPassword />} />
+            <Route path="reset_password/:id/:token" element={<ResetPassword />} />
             <Route index element={<ProtectedRoute> <Home /> </ProtectedRoute>} />
             
             {/* Users */}

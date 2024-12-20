@@ -98,7 +98,7 @@ useEffect(() => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="new">
+    <div className="matchUpdate">
       <Sidebar />
       <div className="newContainer">
         <Navbar />
