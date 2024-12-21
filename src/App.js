@@ -10,17 +10,19 @@ import New from "./pages/new/New.jsx";
 import NewPlayer from "./pages/newPlayer/NewPlayer.jsx";
 import NewClub from "./pages/newClub/NewClub.jsx";
 import NewMatch from "./pages/newMatch/NewMatch.jsx";
+import NewNews from "./pages/newNews/NewNews.jsx";
 import UpdateMatch from "./pages/updateMatch/UpdateMatch.jsx";
 import ViewUsers from "./pages/viewUsers/ViewUsers.jsx";
 import ViewPlayers from "./pages/viewPlayers/ViewPlayers.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { userInputs, playerInputs, clubInputs, clubPlayerInputs, matchInputs } from "./formSource.js";
+import { userInputs, playerInputs, clubInputs, clubPlayerInputs, matchInputs, newsInputs } from "./formSource.js";
 import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext.js";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute.js";
 import AdminProtectedRoute from "./components/protectedRoute/AdminProtectedRoute.js";
-import { clubColumns, userColumns, playerColumns,matchColumns, clubPlayerColumns, clubMatchColumns } from "./datatablesource.js";
+import { clubColumns, userColumns, playerColumns,matchColumns, clubPlayerColumns, clubMatchColumns , newsColumns} from "./datatablesource.js";
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -67,6 +69,12 @@ function App() {
               <Route path="update/:id" element={<UpdateMatch />} />
               <Route path="by-club/:clubId" element={<ProtectedRoute><MatchList columns={clubMatchColumns} /></ProtectedRoute>} />
               <Route path="by-club/new" element={<ProtectedRoute><NewMatch inputs={matchInputs} title="Create New Match" /></ProtectedRoute>} />
+            </Route>
+
+            {/* News */}
+            <Route path="news">
+              <Route index element={<AdminProtectedRoute><List columns={newsColumns} /></AdminProtectedRoute>} />
+              <Route path="new" element={<AdminProtectedRoute><NewNews inputs={newsInputs} title="Create New News" /></AdminProtectedRoute>} />
             </Route>
           </Route>
         </Routes>

@@ -22,7 +22,7 @@ export const userColumns = [
   {
     field: "city",
     headerName: "City",
-    width: 200,
+    width: 150,
   },
 ];
 
@@ -96,5 +96,19 @@ export const clubMatchColumns = [
     field: "club",
     headerName: "Club",
     width: 230,
+  },
+];
+
+export const newsColumns = [
+  { field: "_id", headerName: "ID", width: 170 },
+  {
+    field: "title",
+    headerName: "Title",
+    width: 330,
+  },
+  {
+    field: "publishedDate",
+    headerName: "PublishedDate",
+    width: 330,
   },
 ];

@@ -37,16 +37,18 @@
       .item {
         display: flex;
         align-items: center;
-        margin-right: 20px;
+        margin-right: 40px;
         position: relative;
+
 
         .icon {
           font-size: 20px;
+          margin-right: 40px
         }
 
         .avatar {
-          width: 30px;
-          height: 30px;
+          // width: 30px;
+          // height: 30px;
           border-radius: 50%;
         }
 
