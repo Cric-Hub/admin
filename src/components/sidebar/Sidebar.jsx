@@ -72,6 +72,13 @@ const Sidebar = () => {
             </li>
           </Link>)}
 
+          {user && user.isAdmin &&(<Link to="/news" style={{ textDecoration: "none" }}>
+            <li>
+              <StoreIcon className="icon" />
+              <span>News</span>
+            </li>
+          </Link>)}
+
             <p className="title">My CLUB</p>
           <Link to={`/players/by-club/${user.club}`} style={{ textDecoration: "none" }}>
             <li>

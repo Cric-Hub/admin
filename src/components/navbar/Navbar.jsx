@@ -5,6 +5,7 @@ import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
 import { userColumns } from "../../datatablesource";
 import { AuthContext } from "../../context/AuthContext";
+import UserProfile from "../userProfile/UserProfile";
 
 const Navbar = () => {
   const { darkMode, dispatchDarkMode } = useContext(DarkModeContext); 
@@ -23,10 +24,8 @@ const Navbar = () => {
               onClick={() => dispatchDarkMode({ type: "TOGGLE" })} 
             />
           </div>
-          <div className="item">
-            {user.img && <img src={user.img} alt="" className="avatar" />}
-          </div>
-          <div className="item">{user.username}</div>
+          <div className="item"><UserProfile /></div>
+          
         </div>
       </div>
     </div>
