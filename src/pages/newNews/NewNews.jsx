@@ -6,8 +6,10 @@ import { useState } from "react";
 import axios from "axios";
 import { useToast } from "../../context/ToastContext";
 import { newsInputs } from "../../formSource";
+import Button from "../../components/buttons/Button";
 
 const NewNews = ({ title }) => {
+  const [buttonLoading, setButtonLoading] = useState(false);
   const [file, setFile] = useState(null);
   const [info, setInfo] = useState({});
   const [tags, setTags] = useState("");
@@ -19,6 +21,7 @@ const NewNews = ({ title }) => {
 
 
   const handleClick = async (e) => {
+    setButtonLoading(true);
     e.preventDefault();
 
     const data = new FormData();
@@ -43,7 +46,7 @@ const NewNews = ({ title }) => {
         tags: tags.split(",").map((tag) => tag.trim()), // Split tags by commas
       };
 
-      await axios.post("http://localhost:8000/api/news", newNews);
+      await axios.post("http://localhost:8000/api/news", newNews,{ withCredentials: true });
       showToast("News created successfully!!", "success");
 
       // Clear the form fields after submission
@@ -53,6 +56,8 @@ const NewNews = ({ title }) => {
     } catch (err) {
       console.log(err);
       showToast("Something went wrong while creating News!", "error");
+    }finally {
+      setButtonLoading(false);
     }
   };
 
@@ -101,7 +106,12 @@ const NewNews = ({ title }) => {
                   />
                 </div>
               ))}
-              <button onClick={handleClick}>Send</button>
+              <Button
+                loading={buttonLoading}        
+                text="Publish News"          
+                onClick={handleClick}   
+                loadingText="Publishing..."     
+              />
             </form>
           </div>
         </div>

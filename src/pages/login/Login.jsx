@@ -8,6 +8,7 @@ import axios from "axios"
 import { useState, useEffect } from "react"
 import { useNavigate,Link } from "react-router-dom"
 import { useToast } from "../../context/ToastContext";
+import Button from '../../components/buttons/Button';
 
 const openGmail = () => {
   const recipient = 'CrickHub@gmail.com';
@@ -40,7 +41,7 @@ const Login = () => {
         e.preventDefault();
         dispatch({type: "LOGIN_START"});
         try {
-            const res = await axios.post("http://localhost:8000/api/auth/login", credentials);
+            const res = await axios.post("http://localhost:8000/api/auth/login", credentials,{ withCredentials: true });
             if (res.data.isAdmin) {
                 dispatch({type: "LOGIN_SUCCESS", payload: res.data});
                 navigate("/");
@@ -80,8 +81,14 @@ const Login = () => {
             <Link to="/forgot-password">Forgot Password</Link>
           </div>
 
-          <button disabled={loading} onClick={handleClick} className="lButton">SignIn</button>
-          {loading ? "Signing in..." : ""}
+          <Button
+            loading={loading}        
+            text="Sign In"          
+            onClick={handleClick}   
+            loadingText="Signing in..." 
+            className="lButton"      
+          />
+          
           <div className='leave-note'>
             <p>You are unable to create a new account. Please contact the Administrator.
               <a onClick={openGmail}> Leave a note </a>

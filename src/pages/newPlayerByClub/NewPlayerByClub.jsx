@@ -7,8 +7,10 @@ import useFetch from "../../hooks/useFetch.js";
 import axios from "axios";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext.js";
+import Button from "../../components/buttons/Button.jsx";
 
 const NewPlayerByClub = ({ inputs, title }) => {
+  const [buttonLoading, setButtonLoading] = useState(false);
 const {user} = useContext(AuthContext);
 const [info, setInfo] = useState({});
 const [file, setFile] = useState("");
@@ -19,6 +21,7 @@ const {data, loading, error} = useFetch("http://localhost:8000/api/clubs");
     setInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 const handleClick = async (e) => {
+  setButtonLoading(true);
   e.preventDefault();
   if (!info.name || !clubID) {
     alert("Please complete all fields!");
@@ -51,11 +54,13 @@ const handleClick = async (e) => {
   };
 
   try {
-    await axios.post("http://localhost:8000/api/players", player);
+    await axios.post("http://localhost:8000/api/players", player,{ withCredentials: true });
     alert("Player created successfully!");
   } catch (err) {
     console.error("Error creating player:", err);
     alert("Failed to create player. Please try again.");
+  } finally{
+    setButtonLoading(false);
   }
 };
 
@@ -117,9 +122,12 @@ const handleClick = async (e) => {
                         ))}
                   </select>
                 </div>
-              <button onClick={handleClick} disabled={!info.name || !clubID}>
-                {loading ? "Submitting..." : "Send"}
-              </button>
+              <Button
+                loading={buttonLoading}        
+                text="Create player"          
+                onClick={handleClick}   
+                loadingText="Creating..."     
+              />
             </form>
           </div>
         </div>

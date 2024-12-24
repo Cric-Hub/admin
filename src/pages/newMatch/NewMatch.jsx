@@ -5,8 +5,10 @@ import { useState } from "react";
 import axios from "axios";
 import useFetch from "../../hooks/useFetch";
 import { useToast } from "../../context/ToastContext";
+import Button from "../../components/buttons/Button";
 
 const NewMatch = ({ inputs, title }) => {
+  const [buttonLoading, setButtonLoading] = useState(false);
   const [info, setInfo] = useState({});
   const [club1Players, setClub1Players] = useState([]);
   const [club2Players, setClub2Players] = useState([]);
@@ -60,6 +62,8 @@ const NewMatch = ({ inputs, title }) => {
   };
 
   const handleClick = async (e) => {
+    setButtonLoading(true);
+
     e.preventDefault();
 
     if (!club1ID || !club2ID || !tossWinner) {
@@ -87,6 +91,8 @@ const NewMatch = ({ inputs, title }) => {
     } catch (err) {
       console.error(err);
       showToast("Error creating match!", "error");
+    } finally {
+      setButtonLoading(false);
     }
   };
   
@@ -216,7 +222,12 @@ console.log(info);
                 <input type="number" placeholder="Enter total overs" onChange={handleChange} name="overs" />
               </div>
 
-              <button onClick={handleClick}>Create Match</button>
+              <Button
+                loading={buttonLoading}        
+                text="Create Match"          
+                onClick={handleClick}   
+                loadingText="Creating..."     
+              />
             </form>
           </div>
         </div>

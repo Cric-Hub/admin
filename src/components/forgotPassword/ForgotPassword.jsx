@@ -1,26 +1,37 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './ForgotPassword.css'; // Importing the CSS file
+import './ForgotPassword.css';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   // Setting default axios configuration
   axios.defaults.withCredentials = true;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Sending the email to backend for the password reset process
-    axios
-      .post('http://localhost:8000/api/auth/forgot-password', { email })
-      .then((res) => {
-        if (res.data.Status === 'Success') {
-          navigate('/login'); // Redirect to login page on success
-        }
-      })
-      .catch((err) => console.log(err));
+    setLoading(true); // Set loading state
+    setError(''); // Reset error message
+
+    try {
+      const res = await axios.post('http://localhost:8000/api/auth/forgot-password', { email });
+      console.log("Response from server:", res);
+      if (res.data.Status === 'Success') {
+        alert(res.data.Message);
+        navigate('/login');
+      } else {
+        setError(res.data.Message || 'Failed to send reset link.');
+      }
+    } catch (err) {
+      setError('Something went wrong. Please try again later.');
+      console.error("Error:", err);
+    } finally {
+      setLoading(false); // Reset loading state
+    }
   };
 
   return (
@@ -38,12 +49,14 @@ function ForgotPassword() {
               autoComplete="off"
               name="email"
               className="form-control"
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
-          <button type="submit" className="btn-submit" onClick={handleSubmit}>
-            Send Reset Link
+          {error && <p className="error-message">{error}</p>}
+          <button type="submit" className="btn-submit" disabled={loading}>
+            {loading ? 'Sending...' : 'Send Reset Link'}
           </button>
         </form>
       </div>

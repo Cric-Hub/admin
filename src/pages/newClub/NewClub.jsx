@@ -4,16 +4,18 @@ import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState } from "react";
 import axios from "axios";
+import Button from "../../components/buttons/Button";
 
 const NewClub = ({ inputs, title }) => {
   const [file, setFile] = useState("");
   const [info, setInfo] = useState({});
-
+  const [buttonLoading, setButtonLoading] = useState(false);
     const handleChange = (e) => {
     setInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
     const handleClick = async (e) => {
+    setButtonLoading(true);
     e.preventDefault();
     const data = new FormData();
     data.append("file", file);
@@ -32,7 +34,9 @@ const NewClub = ({ inputs, title }) => {
         await axios.post("http://localhost:8000/api/clubs", newClub);
     } catch (err) {
       console.log(err);
-    }  
+    } finally {
+      setButtonLoading(false);
+    } 
   };
   console.log(info);
 
@@ -80,7 +84,12 @@ const NewClub = ({ inputs, title }) => {
                     id={input.id}/>
                 </div>
               ))}
-              <button onClick={handleClick}>Send</button>
+              <Button
+                loading={buttonLoading}        
+                text="Create club"          
+                onClick={handleClick}   
+                loadingText="Creating..."     
+              />
             </form>
           </div>
         </div>

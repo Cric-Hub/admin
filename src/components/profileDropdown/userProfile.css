@@ -1,0 +1,104 @@
+
+.account {
+  position: relative;
+  /* top: 10px; */
+  z-index: 1;
+}
+
+.profile {
+    display: flex;
+    position: relative;
+    top: 0;
+    right: 30px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    border: #6781d8 1px solid;
+}
+
+.profile img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.menu {
+    position: absolute;
+    width: 260px;
+    background-color: white;
+    top: 100px;
+    right: 15px;
+    border-radius: 20px;
+
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.menu.active {
+  visibility: visible;
+  opacity: 1;
+  top: 75px;
+  border: #5468db 1px solid;
+}
+
+.menu::before {
+  content: "";
+  background-color: white;
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: -9.5px;
+  right: 40px;
+  rotate: 45deg;
+  border-left: #5468db 1px solid;
+  border-top: #5468db 1px solid;
+}
+
+.menu h3 {
+  font-size: 1.4rem;
+  text-align: center;
+  margin: 18px 0 5px;
+}
+
+.menu p {
+  font-size: 1rem;
+  text-align: center;
+  color: #b9b9b9;
+  margin-bottom: 20px;
+}
+
+.menu ul {
+  margin-bottom: 20px;
+  list-style-type: none;
+}
+
+.menu ul li {
+  padding: 15px 20px;
+  border-top: 1px solid #33333310;
+  background: #ffffff;
+  transition: 0.5s;
+}
+
+.menu ul li:hover {
+  background: #e7e7e7;
+}
+
+.menu ul li i {
+  font-size: 1.3rem;
+  color: #b4b4b4;
+  transition: 0.5s;
+}
+
+.menu ul li:hover i {
+  color: #111;
+}
+
+.menu ul li a {
+  font-size: 1.3rem;
+  color: #292929;
+  margin-left: 20px;
+  text-decoration: none;
+}

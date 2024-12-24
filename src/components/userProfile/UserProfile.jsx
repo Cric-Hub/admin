@@ -1,54 +1,35 @@
-import React, { useState } from "react";
-import "./userProfile.css";
-import { useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import React, { useState } from 'react';
+import './userProfile.css';
+import Profile from './Profile';
 
 const UserProfile = () => {
-  const [menuActive, setMenuActive] = useState(false);
-  const {user} = useContext(AuthContext);
+  const [activeTab, setActiveTab] = useState('account');
 
-  const toggleMenu = () => {
-    setMenuActive(!menuActive);
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'Profile':
+        return <Profile />;
+      default:
+        return <Profile />;
+    }
   };
 
   return (
-    <div className="account">
-      <div className="profile" onClick={toggleMenu}>
-        {user.img && <img src={user.img} alt="" className="avatar" />}
+    <div className="profile-update-container">
+    <div className="profile-container">
+      <div className="vertical-tabs">
+        <button
+          className={activeTab === 'Profile' ? 'tab active' : 'tab'}
+          onClick={() => setActiveTab('account')}
+        >
+          Profile
+        </button>
       </div>
-
-      <div className={`menu ${menuActive ? "active" : ""}`}>
-        <h3>{user.username}</h3>
-        <p>{user.isAdmin ? "System Admin" : "Club Admin"}</p>
-        <ul>
-          <li>
-            <i className="fa-regular fa-user"></i>
-            <a href="#">Profile</a>
-          </li>
-          {/* <li>
-            <i className="fa-solid fa-pen-to-square"></i>
-            <a href="#">Edit</a>
-          </li>
-          <li>
-            <i className="fa-regular fa-envelope"></i>
-            <a href="#">Message</a>
-          </li> */}
-          <li>
-            <i className="fa-solid fa-gear"></i>
-            <a href="#">Settings</a>
-          </li>
-          {/* <li>
-            <i className="fa-solid fa-circle-question"></i>
-            <a href="#">Help</a>
-          </li> */}
-          <li>
-            <i className="fa-solid fa-right-from-bracket"></i>
-            <a href="#">Logout</a>
-          </li>
-        </ul>
-      </div>
+      <div className="tab-content">{renderContent()}</div>
+    </div>
     </div>
   );
 };
+
 
 export default UserProfile;

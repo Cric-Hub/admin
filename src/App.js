@@ -13,6 +13,9 @@ import NewMatch from "./pages/newMatch/NewMatch.jsx";
 import NewNews from "./pages/newNews/NewNews.jsx";
 import UpdateMatch from "./pages/updateMatch/UpdateMatch.jsx";
 import ViewUsers from "./pages/viewUsers/ViewUsers.jsx";
+import ProfileUpdateNew from "./components/profileUpdate/ProfileUpdateNew.jsx";
+import Settings from "./pages/settings/Settings.jsx";
+import Profile from "./pages/profile/Profile.jsx";
 import ViewPlayers from "./pages/viewPlayers/ViewPlayers.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { userInputs, playerInputs, clubInputs, clubPlayerInputs, matchInputs, newsInputs } from "./formSource.js";
@@ -38,6 +41,8 @@ function App() {
             <Route index element={<ProtectedRoute> <Home /> </ProtectedRoute>} />
             
             {/* Users */}
+            <Route path="settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+            <Route path="profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="users">
               <Route index element={<AdminProtectedRoute><List columns={userColumns} /></AdminProtectedRoute>} />
               <Route path=":userId" element={<ProtectedRoute><ViewUsers /></ProtectedRoute>} />

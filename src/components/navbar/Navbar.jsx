@@ -5,7 +5,7 @@ import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
 import { userColumns } from "../../datatablesource";
 import { AuthContext } from "../../context/AuthContext";
-import UserProfile from "../userProfile/UserProfile";
+import UserProfile from "../profileDropdown/UserProfile";
 
 const Navbar = () => {
   const { darkMode, dispatchDarkMode } = useContext(DarkModeContext); 

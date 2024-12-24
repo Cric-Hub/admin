@@ -1,0 +1,39 @@
+/* General button styling */
+.lButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Button hover state */
+.lButton:hover {
+  background-color: #1565c0;
+}
+
+/* Button disabled styling */
+.lButton:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Styling when button is in loading state */
+.lButton.loading {
+  background-color: #0288d1;
+}
+
+/* Centering the spinner and text */
+.lButton.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Styling for the CircularProgress spinner */
+.lButton.loading .MuiCircularProgress-root {
+  margin-right: 10px;
+}
