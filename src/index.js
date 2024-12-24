@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App.js';
-import axios from 'axios';
 import { AuthContextProvider } from './context/AuthContext.js';
 import { ToastProvider } from "./context/ToastContext.js";
 import { DarkModeContextProvider } from "./context/darkModeContext.js";
