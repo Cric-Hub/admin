@@ -24,7 +24,7 @@ const DatatableClub = ({ columns}) => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/${path}/${id}`);
+      await axios.delete(`http://localhost:8000/api/${path}/${id}`,{ withCredentials: true });
       setList(list.filter((item) => item._id !== id));
     } catch (err) {
       

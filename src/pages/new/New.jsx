@@ -46,7 +46,7 @@ const handleClick = async (e) => {
       club: clubID,
     };
 
-    await axios.post("http://localhost:8000/api/auth/register", newUser);
+    await axios.post("http://localhost:8000/api/auth/register", newUser,{ withCredentials: true });
     showToast("User created successfully!!", "success");
   } catch (err) {
     console.log(err);
