@@ -83,7 +83,7 @@ const handleClick = async (e) => {
   };
 
   try {
-    const response = await axios.post("http://localhost:8000/api/matches", newMatch);
+    const response = await axios.post("http://localhost:8000/api/matches", newMatch,{ withCredentials: true });
     console.log(response.data);  // Log server response
     showToast("Match created successfully!", "success");
   } catch (err) {
