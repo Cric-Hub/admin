@@ -31,7 +31,7 @@ const NewClub = ({ inputs, title }) => {
           image: url,
         };
 
-        await axios.post("http://localhost:8000/api/clubs", newClub);
+        await axios.post("http://localhost:8000/api/clubs", newClub, { withCredentials: true });
     } catch (err) {
       console.log(err);
     } finally {

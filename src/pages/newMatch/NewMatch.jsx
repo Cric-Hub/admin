@@ -28,7 +28,7 @@ const NewMatch = ({ inputs, title }) => {
     const clubId = e.target.value;
     setClub1ID(clubId);
     try {
-      const res = await axios.get(`http://localhost:8000/api/players/by-club/${clubId}`);
+      const res = await axios.get(`http://localhost:8000/api/players/by-club/${clubId}`, { withCredentials: true });
       setClub1Players(res.data);
     } catch (err) {
       console.error(err);
@@ -40,7 +40,7 @@ const NewMatch = ({ inputs, title }) => {
     const clubId = e.target.value;
     setClub2ID(clubId);
     try {
-      const res = await axios.get(`http://localhost:8000/api/players/by-club/${clubId}`);
+      const res = await axios.get(`http://localhost:8000/api/players/by-club/${clubId}`, { withCredentials: true });
       setClub2Players(res.data);
     } catch (err) {
       console.error(err);
@@ -86,7 +86,7 @@ const NewMatch = ({ inputs, title }) => {
     };
 
     try {
-      await axios.post("http://localhost:8000/api/matches", newMatch);
+      await axios.post("http://localhost:8000/api/matches", newMatch, { withCredentials: true });
       showToast("Match created successfully!", "success");
     } catch (err) {
       console.error(err);
