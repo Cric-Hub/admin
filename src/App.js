@@ -18,7 +18,7 @@ import Settings from "./pages/settings/Settings.jsx";
 import Profile from "./pages/profile/Profile.jsx";
 import ViewPlayers from "./pages/viewPlayers/ViewPlayers.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { userInputs, playerInputs, clubInputs, clubPlayerInputs, matchInputs, newsInputs } from "./formSource.js";
+import { userInputs, playerInputs, clubInputs, clubPlayerInputs, matchInputs, newsInputs ,} from "./formSource.js";
 import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext.js";
