@@ -6,9 +6,11 @@ import { useState } from "react";
 import axios from "axios";
 import useFetch from "../../hooks/useFetch";
 import { useToast } from "../../context/ToastContext";
+import Button from "../../components/buttons/Button";
 
 const New = ({ inputs, title }) => {
   const [file, setFile] = useState("");
+  const [buttonLoading, setButtonLoading] = useState(false);
   const [info, setInfo] = useState({});
   const [clubID, setClubID] = useState(undefined);
   const {data, loading, error} = useFetch("http://localhost:8000/api/clubs");
@@ -25,6 +27,7 @@ const handleClick = async (e) => {
     showToast("Please select a club before submitting!", "warn");
     return;
   }
+  setButtonLoading(true);
 
   const data = new FormData();
   data.append("file", file);
@@ -48,6 +51,8 @@ const handleClick = async (e) => {
   } catch (err) {
     console.log(err);
     alert("Something went wrong while registering the user!");
+  }finally {
+    setButtonLoading(false);
   }
 };
 
@@ -111,7 +116,12 @@ const handleClick = async (e) => {
                         ))}
                   </select>
                 </div>
-              <button onClick={handleClick}>Send</button>
+              <Button
+                loading={buttonLoading}        
+                text="Create"          
+                onClick={handleClick}   
+                loadingText="Creating..."     
+              />
             </form>
           </div>
         </div>

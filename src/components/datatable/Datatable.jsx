@@ -7,9 +7,12 @@ import useFetch from "../../hooks/useFetch.js";
 import { use } from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
+import { useConfirmation } from "../../context/ConfirmationContext.js";
+import { useSnackbar } from "notistack";
 
 const Datatable = ({ columns}) => {
-  
+  const { enqueueSnackbar } = useSnackbar();
+  const { showConfirmation } = useConfirmation();
   const location = useLocation();
   const path = location.pathname.split("/")[1];
   const [list, setList] = useState([]);
@@ -23,10 +26,21 @@ const Datatable = ({ columns}) => {
     try {
       await axios.delete(`http://localhost:8000/api/${path}/${id}`);
       setList(list.filter((item) => item._id !== id));
+      enqueueSnackbar("Item deleted successfully!", { variant: "success" });
     } catch (err) {
-      
+      enqueueSnackbar("Failed to delete item.", { variant: "error" });
     }
     
+  };
+
+  const confirmDelete = (id) => {
+    showConfirmation({
+      message: "Are you sure you want to delete this item?",
+      onConfirm: () => handleDelete(id),
+      onCancel: () => enqueueSnackbar("Action cancelled!", { variant: "info" }),
+      confirmLabel: "Yes, Delete",
+      cancelLabel: "No, Keep",
+    });
   };
 
   const actionColumn = [
@@ -42,7 +56,7 @@ const Datatable = ({ columns}) => {
             </Link>
             <div
               className="deleteButton"
-              onClick={() => handleDelete(params.row._id)}
+              onClick={() => confirmDelete(params.row._id)}
             >
               Delete
             </div>

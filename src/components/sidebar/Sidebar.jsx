@@ -1,16 +1,18 @@
 import "./sidebar.scss";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+//import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import StoreIcon from "@mui/icons-material/Store";
-import InsertChartIcon from "@mui/icons-material/InsertChart";
+//import InsertChartIcon from "@mui/icons-material/InsertChart";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import SettingsSystemDaydreamOutlinedIcon from "@mui/icons-material/SettingsSystemDaydreamOutlined";
-import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
+//import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
+//import SettingsSystemDaydreamOutlinedIcon from "@mui/icons-material/SettingsSystemDaydreamOutlined";
+//import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import NewsIcon from '@mui/icons-material/Article';
+import ClubPlayersIcon from '@mui/icons-material/Groups2';
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
@@ -23,6 +25,7 @@ const Sidebar = () => {
 
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
+    localStorage.removeItem("user");
   }
   return (
     <div className="sidebar">
@@ -53,7 +56,7 @@ const Sidebar = () => {
 
           {user && user.isAdmin &&(<Link to="/players" style={{ textDecoration: "none" }}>
             <li>
-              <StoreIcon className="icon" />
+              <ClubPlayersIcon className="icon" />
               <span>Players</span>
             </li>
           </Link>)}
@@ -74,7 +77,7 @@ const Sidebar = () => {
 
           {user && user.isAdmin &&(<Link to="/news" style={{ textDecoration: "none" }}>
             <li>
-              <StoreIcon className="icon" />
+              <NewsIcon className="icon" />
               <span>News</span>
             </li>
           </Link>)}
@@ -82,7 +85,7 @@ const Sidebar = () => {
             <p className="title">My CLUB</p>
           <Link to={`/players/by-club/${user.club}`} style={{ textDecoration: "none" }}>
             <li>
-              <StoreIcon className="icon" />
+              <ClubPlayersIcon className="icon" />
               <span>Players</span>
             </li>
           </Link>
@@ -93,15 +96,19 @@ const Sidebar = () => {
           </li>
           </Link>
           <p className="title">SERVICE</p>
-          <li>
-            <SettingsApplicationsIcon className="icon" />
-            <span>Settings</span>
-          </li>
+          <Link to={`/settings`} style={{ textDecoration: "none" }}>
+            <li>
+              <SettingsApplicationsIcon className="icon" />
+              <span>Settings</span>
+            </li>
+          </Link>
           <p className="title">USER</p>
+          <Link to={`/profile`} style={{ textDecoration: "none" }}>
           <li>
             <AccountCircleOutlinedIcon className="icon" />
             <span>Profile</span>
           </li>
+          </Link>
           <li onClick={handleLogout}>
             <ExitToAppIcon className="icon" />
             <span>Logout</span>

@@ -5,6 +5,7 @@ import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import { useToast } from "../../context/ToastContext";
 import './updateMatch.scss'
+import Button from "../../components/buttons/Button";
 
 const UpdateMatch = ({ title }) => {
   const [match, setMatch] = useState({
@@ -16,6 +17,7 @@ const UpdateMatch = ({ title }) => {
     status: "Live",
     currentInnings: "club1",
   });
+  const [buttonLoading, setButtonLoading] = useState(false);
   const [clubs, setClubs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -51,12 +53,15 @@ useEffect(() => {
   
 
   const handleSubmit = async (e) => {
+    setButtonLoading(true);
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:8000/api/matches/${id}`, match);
+      await axios.put(`http://localhost:8000/api/matches/${id}`, match,{ withCredentials: true });
       showToast("Match Updated successfully!!", "success");
     } catch (err) {
       setError("Failed to update the match");
+    }finally{
+      setButtonLoading(false);
     }
   };
 
@@ -243,7 +248,12 @@ useEffect(() => {
                 </select>
 
                 {/* Submit button */}
-                <button type="submit">Update</button>
+                <Button
+                loading={buttonLoading}        
+                text="Update"          
+                onClick={handleSubmit}   
+                loadingText="Updating..."     
+              />
               </div>
             </form>
           </div>
