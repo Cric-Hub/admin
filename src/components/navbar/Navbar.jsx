@@ -3,7 +3,6 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
-import { userColumns } from "../../datatablesource";
 import { AuthContext } from "../../context/AuthContext";
 import UserProfile from "../profileDropdown/UserProfile";
 

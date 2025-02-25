@@ -1,12 +1,12 @@
 import "./newNews.scss";
-import Sidebar from "../../components/sidebar/Sidebar";
-import Navbar from "../../components/navbar/Navbar";
+import Sidebar from "../../../components/sidebar/Sidebar";
+import Navbar from "../../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState } from "react";
 import axios from "axios";
-import { useToast } from "../../context/ToastContext";
-import { newsInputs } from "../../formSource";
-import Button from "../../components/buttons/Button";
+import { useToast } from "../../../context/ToastContext";
+import { newsInputs } from "../../../formSource";
+import Button from "../../../components/buttons/Button";
 
 const NewNews = ({ title }) => {
   const [buttonLoading, setButtonLoading] = useState(false);

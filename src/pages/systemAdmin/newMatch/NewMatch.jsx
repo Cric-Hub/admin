@@ -1,11 +1,11 @@
 import "./newMatch.scss";
-import Sidebar from "../../components/sidebar/Sidebar";
-import Navbar from "../../components/navbar/Navbar";
+import Sidebar from "../../../components/sidebar/Sidebar";
+import Navbar from "../../../components/navbar/Navbar";
 import { useState } from "react";
 import axios from "axios";
-import useFetch from "../../hooks/useFetch";
-import { useToast } from "../../context/ToastContext";
-import Button from "../../components/buttons/Button";
+import useFetch from "../../../hooks/useFetch";
+import { useToast } from "../../../context/ToastContext";
+import Button from "../../../components/buttons/Button";
 
 const NewMatch = ({ inputs, title }) => {
   const [buttonLoading, setButtonLoading] = useState(false);

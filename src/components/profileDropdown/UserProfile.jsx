@@ -30,19 +30,19 @@ const UserProfile = () => {
           <Link to="/profile" style={{ textDecoration: "none" }} >
           <li>
             <i className="fa-regular fa-user"></i>
-            <a href="#">Profile</a>
+            <label>Profile</label>
           </li>
           </Link>
           <Link to="/settings" style={{ textDecoration: "none" }}>
           <li>
             <i className="fa-solid fa-gear"></i>
-            <a href="#">Settings</a>
+            <label>Settings</label>
           </li>
           </Link>
           <Link to="/#" style={{ textDecoration: "none" }} onClick={handleLogout}>
           <li>
             <i className="fa-solid fa-right-from-bracket"></i>
-            <a href="#">Logout</a>
+            <label>Logout</label>
           </li>
           </Link>
         </ul>

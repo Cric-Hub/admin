@@ -1,13 +1,13 @@
 import "./newPlayerByClub.scss";
-import Sidebar from "../../components/sidebar/Sidebar";
-import Navbar from "../../components/navbar/Navbar";
+import Sidebar from "../../../components/sidebar/Sidebar.jsx";
+import Navbar from "../../../components/navbar/Navbar.jsx";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState } from "react";
-import useFetch from "../../hooks/useFetch.js";
+import useFetch from "../../../hooks/useFetch.js";
 import axios from "axios";
 import { useContext } from "react";
-import { AuthContext } from "../../context/AuthContext.js";
-import Button from "../../components/buttons/Button.jsx";
+import { AuthContext } from "../../../context/AuthContext.js";
+import Button from "../../../components/buttons/Button.jsx";
 
 const NewPlayerByClub = ({ inputs, title }) => {
   const [buttonLoading, setButtonLoading] = useState(false);
