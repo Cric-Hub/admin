@@ -16,10 +16,6 @@ const Home = () => {
           <Widget type="earning" />
           <Widget type="balance" />
         </div>
-        <div className="listContainer">
-          <div className="listTitle">Latest Transactions</div>
-          <Table />
-        </div>
       </div>
     </div>
   );

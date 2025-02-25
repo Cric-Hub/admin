@@ -231,12 +231,6 @@ useEffect(() => {
                   <option value="Bat">Bat</option>
                   <option value="Bowl">Bowl</option>
                 </select>
-
-                <div>
-                  {/* <h3>
-                    {getClubNameById(match.tossWinner)} won the toss and elected to {match.tossChoice}.
-                  </h3> */}
-                </div>
                 
                 <label>Current Innings</label>
                 <select

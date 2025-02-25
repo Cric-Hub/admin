@@ -1,11 +1,10 @@
 
 .account {
   position: relative;
-  /* top: 10px; */
   z-index: 1;
 }
 
-.profile {
+.account .profile {
     display: flex;
     position: relative;
     top: 0;
@@ -96,7 +95,7 @@
   color: #111;
 }
 
-.menu ul li a {
+.menu ul li label {
   font-size: 1.3rem;
   color: #292929;
   margin-left: 20px;

@@ -1,62 +1,57 @@
-import "./newPlayer.scss";
-import Sidebar from "../../components/sidebar/Sidebar";
-import Navbar from "../../components/navbar/Navbar";
+import "./new.scss";
+import Sidebar from "../../../components/sidebar/Sidebar";
+import Navbar from "../../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState } from "react";
-import useFetch from "../../hooks/useFetch.js";
 import axios from "axios";
-import Button from "../../components/buttons/Button.jsx";
+import useFetch from "../../../hooks/useFetch";
+import { useToast } from "../../../context/ToastContext";
+import Button from "../../../components/buttons/Button";
 
-const NewPlayer = ({ inputs, title }) => {
+const New = ({ inputs, title }) => {
+  const [file, setFile] = useState("");
   const [buttonLoading, setButtonLoading] = useState(false);
   const [info, setInfo] = useState({});
-  const [file, setFile] = useState("");
   const [clubID, setClubID] = useState(undefined);
   const {data, loading, error} = useFetch("http://localhost:8000/api/clubs");
+  const showToast = useToast();
 
   const handleChange = (e) => {
     setInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  }
-const handleClick = async (e) => {
-  setButtonLoading(true);
-  e.preventDefault();
-  if (!info.name || !clubID) {
-    alert("Please complete all fields!");
-    return;
-  }
-
-  let imageUrl = "";
-  if (file) {
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", "upload");
-
-    try {
-      const uploadRes = await axios.post(
-        "https://api.cloudinary.com/v1_1/hashanthapramod/image/upload",
-        formData
-      );
-      imageUrl = uploadRes.data.url;
-    } catch (err) {
-      console.error("Error uploading image:", err);
-      alert("Image upload failed!");
-      return;
-    }
-  }
-
-  const player = {
-    name: info.name,
-    club: clubID,
-    img: imageUrl,
   };
 
+const handleClick = async (e) => {
+  e.preventDefault();
+
+  if (!clubID) {
+    showToast("Please select a club before submitting!", "warn");
+    return;
+  }
+  setButtonLoading(true);
+
+  const data = new FormData();
+  data.append("file", file);
+  data.append("upload_preset", "upload");
+
   try {
-    await axios.post("http://localhost:8000/api/players", player,{ withCredentials: true });
-    alert("Player created successfully!");
+    const uploadRes = await axios.post(
+      "https://api.cloudinary.com/v1_1/hashanthapramod/image/upload",
+      data
+    );
+    const { url } = uploadRes.data;
+
+    const newUser = {
+      ...info,
+      img: url,
+      club: clubID,
+    };
+
+    await axios.post("http://localhost:8000/api/auth/register", newUser,{ withCredentials: true });
+    showToast("User created successfully!!", "success");
   } catch (err) {
-    console.error("Error creating player:", err);
-    alert("Failed to create player. Please try again.");
-  }finally{
+    console.log(err);
+    alert("Something went wrong while registering the user!");
+  }finally {
     setButtonLoading(false);
   }
 };
@@ -99,16 +94,18 @@ const handleClick = async (e) => {
                 <div className="formInput" key={input.id}>
                   <label>{input.label}</label>
                   <input type={input.type} 
+                  placeholder={input.placeholder} 
                   onChange={handleChange}
                   name={input.label.toLowerCase()} 
-                  id={input.id}
-                  placeholder={input.placeholder} />
+                  id={input.id}/>
                 </div>
               ))}
               <div className="formInput">
                   <label>Select Club</label>
                   <select id="clubID" onChange={(e) => setClubID(e.target.value)} value={clubID || ""}>
-                    <option value="" disabled>Select a Club</option>
+                    <option value="" disabled>
+                      Select a Club
+                    </option>
                     {loading
                       ? "loading"
                       : data &&
@@ -121,7 +118,7 @@ const handleClick = async (e) => {
                 </div>
               <Button
                 loading={buttonLoading}        
-                text="Create player"          
+                text="Create"          
                 onClick={handleClick}   
                 loadingText="Creating..."     
               />
@@ -133,4 +130,4 @@ const handleClick = async (e) => {
   );
 };
 
-export default NewPlayer;
+export default New;

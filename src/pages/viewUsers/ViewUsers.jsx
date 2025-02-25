@@ -1,9 +1,6 @@
 import "./viewUsers.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
-import Chart from "../../components/chart/Chart";
-import List from "../../components/table/Table";
-import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios"; 
@@ -67,12 +64,9 @@ const ViewUsers = () => {
             </div>
           </div>
           <div className="right">
-            {/* <Chart aspect={3 / 1} title="User Spending ( Last 6 Months)" /> */}
           </div>
         </div>
         <div className="bottom">
-        {/* <h1 className="title">Last Transactions</h1>
-          <List/> */}
         </div>
       </div>
     </div>

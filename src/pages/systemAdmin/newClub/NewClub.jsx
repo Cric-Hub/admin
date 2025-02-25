@@ -1,10 +1,10 @@
 import "./newClub.scss";
-import Sidebar from "../../components/sidebar/Sidebar";
-import Navbar from "../../components/navbar/Navbar";
+import Sidebar from "../../../components/sidebar/Sidebar";
+import Navbar from "../../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState } from "react";
 import axios from "axios";
-import Button from "../../components/buttons/Button";
+import Button from "../../../components/buttons/Button";
 
 const NewClub = ({ inputs, title }) => {
   const [file, setFile] = useState("");

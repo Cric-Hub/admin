@@ -1,14 +1,11 @@
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
-import { userColumns, userRows } from "../../datatablesource.js";
-import { Link } from "react-router-dom";
+import { Link, useLocation} from "react-router-dom";
 import { useEffect, useState } from "react";
-import useFetch from "../../hooks/useFetch.js";
-import { use } from "react";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
-import { useConfirmation } from "../../context/ConfirmationContext.js";
 import { useSnackbar } from "notistack";
+import { useConfirmation } from "../../context/ConfirmationContext.js";
+import useFetch from "../../hooks/useFetch.js";
 
 const Datatable = ({ columns}) => {
   const { enqueueSnackbar } = useSnackbar();
