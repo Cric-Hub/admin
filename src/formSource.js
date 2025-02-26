@@ -31,7 +31,35 @@ export const userInputs = [
       label: "Name",
       type: "text",
       placeholder: "pramod",
-    }
+      },{
+        id: 2,
+        label: "DOB",
+        type: "date",
+      },
+      {
+        id: 3,
+        label: "Bio",
+        type: "text",
+        placeholder: "Enter player details",
+      },
+      {
+        id: 4,
+        label: "BattingStyle",
+        type: "text",
+        placeholder: "Enter player batting style",
+      },
+      {
+        id: 5,
+        label: "BowlingStyle",
+        type: "text",
+        placeholder: "Enter player bowling style",
+      },
+      {
+        id: 6,
+        label: "Role",
+        type: "select", 
+        options: ["Batsman", "Bowler", "All-rounder", "Wicketkeeper"], 
+      },
   ];
   
       export const clubInputs = [
