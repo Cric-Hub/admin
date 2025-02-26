@@ -62,6 +62,123 @@ export const userInputs = [
       },
   ];
   
+export const optionalInputs = [
+  // Batting details
+  {
+    id: 7,
+    label: "Batting Matches",
+    type: "number",
+    placeholder: "Enter batting matches",
+    name: "battingMatches",
+  },
+  {
+    id: 8,
+    label: "Batting Innings",
+    type: "number",
+    placeholder: "Enter batting innings",
+    name: "battingInnings",
+  },
+  {
+    id: 9,
+    label: "Batting Runs",
+    type: "number",
+    placeholder: "Enter batting runs",
+    name: "battingRuns",
+  },
+  {
+    id: 10,
+    label: "Batting Balls Faced",
+    type: "number",
+    placeholder: "Enter balls faced",
+    name: "battingBallsFaced",
+  },
+  {
+    id: 11,
+    label: "Batting Highest Score",
+    type: "number",
+    placeholder: "Enter highest score",
+    name: "battingHighestScore",
+  },
+  {
+    id: 12,
+    label: "Batting Not Outs",
+    type: "number",
+    placeholder: "Enter not outs",
+    name: "battingNotOuts",
+  },
+  // Bowling details
+  {
+    id: 13,
+    label: "Bowling Matches",
+    type: "number",
+    placeholder: "Enter bowling matches",
+    name: "bowlingMatches",
+  },
+  {
+    id: 14,
+    label: "Bowling Innings",
+    type: "number",
+    placeholder: "Enter bowling innings",
+    name: "bowlingInnings",
+  },
+  {
+    id: 15,
+    label: "Bowling Overs Bowled",
+    type: "number",
+    placeholder: "Enter overs bowled",
+    name: "bowlingOversBowled",
+  },
+  {
+    id: 16,
+    label: "Bowling Balls Bowled",
+    type: "number",
+    placeholder: "Enter balls bowled",
+    name: "bowlingBallsBowled",
+  },
+  {
+    id: 17,
+    label: "Bowling Runs Conceded",
+    type: "number",
+    placeholder: "Enter runs conceded",
+    name: "bowlingRunsConceded",
+  },
+  {
+    id: 18,
+    label: "Bowling Wickets",
+    type: "number",
+    placeholder: "Enter wickets",
+    name: "bowlingWickets",
+  },
+  // Fielding details
+  {
+    id: 19,
+    label: "Fielding Matches",
+    type: "number",
+    placeholder: "Enter fielding matches",
+    name: "fieldingMatches",
+  },
+  {
+    id: 20,
+    label: "Fielding Catches",
+    type: "number",
+    placeholder: "Enter catches",
+    name: "fieldingCatches",
+  },
+  {
+    id: 21,
+    label: "Fielding Run Outs",
+    type: "number",
+    placeholder: "Enter run outs",
+    name: "fieldingRunOuts",
+  },
+  {
+    id: 22,
+    label: "Fielding Stumpings",
+    type: "number",
+    placeholder: "Enter stumpings",
+    name: "fieldingStumpings",
+  },
+];
       export const clubInputs = [
     {
       id: 1,

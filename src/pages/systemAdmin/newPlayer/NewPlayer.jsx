@@ -8,7 +8,8 @@ import useFetch from "../../../hooks/useFetch";
 import { useToast } from "../../../context/ToastContext";
 import Button from "../../../components/buttons/Button";
 
-const NewPlayer = ({ inputs, title }) => {
+const NewPlayer = ({ inputs, title, optionalInputs }) => {
+  const [showOptionalFields, setShowOptionalFields] = useState(false);
   const [file, setFile] = useState("");
   const [buttonLoading, setButtonLoading] = useState(false);
   const [info, setInfo] = useState({});
@@ -18,6 +19,10 @@ const NewPlayer = ({ inputs, title }) => {
 
   const handleChange = (e) => {
     setInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const toggleOptionalFields = () => {
+    setShowOptionalFields((prev) => !prev); // Toggle visibility
   };
 
 const handleClick = async (e) => {
@@ -44,6 +49,28 @@ const handleClick = async (e) => {
       ...info,
       img: url,
       club: clubID,
+      batting: {
+          matches: info.battingMatches || 0,
+          innings: info.battingInnings || 0,
+          runs: info.battingRuns || 0,
+          ballsFaced: info.battingBallsFaced || 0,
+          highestScore: info.battingHighestScore || 0,
+          notOuts: info.battingNotOuts || 0,
+        },
+        bowling: {
+          matches: info.bowlingMatches || 0,
+          innings: info.bowlingInnings || 0,
+          oversBowled: info.bowlingOversBowled || 0,
+          ballsBowled: info.bowlingBallsBowled || 0,
+          runsConceded: info.bowlingRunsConceded || 0,
+          wickets: info.bowlingWickets || 0,
+        },
+        fielding: {
+          matches: info.fieldingMatches || 0,
+          catches: info.fieldingCatches || 0,
+          runOuts: info.fieldingRunOuts || 0,
+          stumpings: info.fieldingStumpings || 0,
+        },
     };
 
     await axios.post("http://localhost:8000/api/players", player,{ withCredentials: true });
@@ -131,6 +158,30 @@ const handleClick = async (e) => {
                         ))}
                   </select>
                 </div>
+                 {/* Toggle button for optional fields */}
+              <button
+                type="button"
+                onClick={toggleOptionalFields}
+                className="toggleButton"
+              >
+                {showOptionalFields ? "Hide Optional Fields" : "Show Optional Fields"}
+              </button>
+
+              {/* Render optional fields if toggled */}
+              {showOptionalFields &&
+                optionalInputs.map((input) => (
+                  <div className="formInput" key={input.id}>
+                    <label>{input.label}</label>
+                    <input
+                      type={input.type}
+                      placeholder={input.placeholder}
+                      onChange={handleChange}
+                      name={input.name}
+                      value={info[input.name] || ""}
+                      id={input.id}
+                    />
+                  </div>
+                ))}
               <Button
                 loading={buttonLoading}        
                 text="Create"          
