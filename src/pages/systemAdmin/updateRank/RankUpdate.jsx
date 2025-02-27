@@ -1,5 +1,7 @@
 import React from 'react'
 import axios from "axios";
+import Navbar from "../../../components/navbar/Navbar";
+import Sidebar from "../../../components/sidebar/Sidebar";
 
 const RankUpdate = () => {
     const updateRankings = async () => {
@@ -11,8 +13,12 @@ const RankUpdate = () => {
   }
 };
   return (
-    <div>
-        <button onClick={updateRankings}>Update Rankings</button>
+        <div className="single">
+      <Sidebar />
+      <div className="singleContainer">
+        <Navbar />
+            <button onClick={updateRankings}>Update Rankings</button>
+      </div>
     </div>
   )
 }
