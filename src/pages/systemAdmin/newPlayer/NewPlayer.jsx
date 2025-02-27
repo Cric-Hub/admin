@@ -1,62 +1,84 @@
 import "./newPlayer.scss";
-import Sidebar from "../../../components/sidebar/Sidebar.jsx";
-import Navbar from "../../../components/navbar/Navbar.jsx";
+import Sidebar from "../../../components/sidebar/Sidebar";
+import Navbar from "../../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState } from "react";
-import useFetch from "../../../hooks/useFetch.js";
 import axios from "axios";
-import Button from "../../../components/buttons/Button.jsx";
+import useFetch from "../../../hooks/useFetch";
+import { useToast } from "../../../context/ToastContext";
+import Button from "../../../components/buttons/Button";
 
-const NewPlayer = ({ inputs, title }) => {
+const NewPlayer = ({ inputs, title, optionalInputs }) => {
+  const [showOptionalFields, setShowOptionalFields] = useState(false);
+  const [file, setFile] = useState("");
   const [buttonLoading, setButtonLoading] = useState(false);
   const [info, setInfo] = useState({});
-  const [file, setFile] = useState("");
   const [clubID, setClubID] = useState(undefined);
   const {data, loading, error} = useFetch("http://localhost:8000/api/clubs");
+  const showToast = useToast();
 
   const handleChange = (e) => {
     setInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  }
-const handleClick = async (e) => {
-  setButtonLoading(true);
-  e.preventDefault();
-  if (!info.name || !clubID) {
-    alert("Please complete all fields!");
-    return;
-  }
-
-  let imageUrl = "";
-  if (file) {
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", "upload");
-
-    try {
-      const uploadRes = await axios.post(
-        "https://api.cloudinary.com/v1_1/hashanthapramod/image/upload",
-        formData
-      );
-      imageUrl = uploadRes.data.url;
-    } catch (err) {
-      console.error("Error uploading image:", err);
-      alert("Image upload failed!");
-      return;
-    }
-  }
-
-  const player = {
-    name: info.name,
-    club: clubID,
-    img: imageUrl,
   };
 
+  const toggleOptionalFields = () => {
+    setShowOptionalFields((prev) => !prev); // Toggle visibility
+  };
+
+const handleClick = async (e) => {
+  e.preventDefault();
+
+  if (!clubID) {
+    showToast("Please select a club before submitting!", "warn");
+    return;
+  }
+  setButtonLoading(true);
+
+  const data = new FormData();
+  data.append("file", file);
+  data.append("upload_preset", "upload");
+
   try {
+    const uploadRes = await axios.post(
+      "https://api.cloudinary.com/v1_1/hashanthapramod/image/upload",
+      data
+    );
+    const { url } = uploadRes.data;
+
+    const player = {
+      ...info,
+      img: url,
+      club: clubID,
+      batting: {
+          matches: info.battingMatches || 0,
+          innings: info.battingInnings || 0,
+          runs: info.battingRuns || 0,
+          ballsFaced: info.battingBallsFaced || 0,
+          highestScore: info.battingHighestScore || 0,
+          notOuts: info.battingNotOuts || 0,
+        },
+        bowling: {
+          matches: info.bowlingMatches || 0,
+          innings: info.bowlingInnings || 0,
+          oversBowled: info.bowlingOversBowled || 0,
+          ballsBowled: info.bowlingBallsBowled || 0,
+          runsConceded: info.bowlingRunsConceded || 0,
+          wickets: info.bowlingWickets || 0,
+        },
+        fielding: {
+          matches: info.fieldingMatches || 0,
+          catches: info.fieldingCatches || 0,
+          runOuts: info.fieldingRunOuts || 0,
+          stumpings: info.fieldingStumpings || 0,
+        },
+    };
+
     await axios.post("http://localhost:8000/api/players", player,{ withCredentials: true });
-    alert("Player created successfully!");
+    showToast("Player created successfully!!", "success");
   } catch (err) {
-    console.error("Error creating player:", err);
-    alert("Failed to create player. Please try again.");
-  }finally{
+    console.log(err);
+    alert("Something went wrong while creating player!");
+  }finally {
     setButtonLoading(false);
   }
 };
@@ -98,17 +120,34 @@ const handleClick = async (e) => {
               {inputs.map((input) => (
                 <div className="formInput" key={input.id}>
                   <label>{input.label}</label>
+                  {input.type === "select" ?(
+                    <select
+                      name={input.label.toLowerCase()}
+                      onChange={handleChange}
+                      value={info[input.label.toLowerCase()] || ""}
+                    >
+                      <option value="" disabled>Select {input.label}</option>
+                      {input.options.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  ):(
                   <input type={input.type} 
+                  placeholder={input.placeholder} 
                   onChange={handleChange}
                   name={input.label.toLowerCase()} 
-                  id={input.id}
-                  placeholder={input.placeholder} />
+                  value={info[input.label.toLowerCase()] || ""}
+                  id={input.id}/>)}
                 </div>
               ))}
               <div className="formInput">
                   <label>Select Club</label>
                   <select id="clubID" onChange={(e) => setClubID(e.target.value)} value={clubID || ""}>
-                    <option value="" disabled>Select a Club</option>
+                    <option value="" disabled>
+                      Select a Club
+                    </option>
                     {loading
                       ? "loading"
                       : data &&
@@ -119,9 +158,33 @@ const handleClick = async (e) => {
                         ))}
                   </select>
                 </div>
+                 {/* Toggle button for optional fields */}
+              <button
+                type="button"
+                onClick={toggleOptionalFields}
+                className="toggleButton"
+              >
+                {showOptionalFields ? "Hide Optional Fields" : "Show Optional Fields"}
+              </button>
+
+              {/* Render optional fields if toggled */}
+              {showOptionalFields &&
+                optionalInputs.map((input) => (
+                  <div className="formInput" key={input.id}>
+                    <label>{input.label}</label>
+                    <input
+                      type={input.type}
+                      placeholder={input.placeholder}
+                      onChange={handleChange}
+                      name={input.name}
+                      value={info[input.name] || ""}
+                      id={input.id}
+                    />
+                  </div>
+                ))}
               <Button
                 loading={buttonLoading}        
-                text="Create player"          
+                text="Create"          
                 onClick={handleClick}   
                 loadingText="Creating..."     
               />
