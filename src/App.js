@@ -16,6 +16,7 @@ import ViewUsers from "./pages/viewUsers/ViewUsers.jsx";
 import ProfileUpdateNew from "./components/profileUpdate/ProfileUpdateNew.jsx";
 import Settings from "./pages/settings/Settings.jsx";
 import Profile from "./pages/profile/Profile.jsx";
+import RankUpdate from "./pages/systemAdmin/updateRank/RankUpdate.jsx";
 import ViewPlayers from "./pages/viewPlayers/ViewPlayers.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { userInputs, playerInputs, clubInputs, clubPlayerInputs, matchInputs, newsInputs ,optionalInputs} from "./formSource.js";
@@ -81,6 +82,9 @@ function App() {
               <Route index element={<AdminProtectedRoute><List columns={newsColumns} /></AdminProtectedRoute>} />
               <Route path="new" element={<AdminProtectedRoute><NewNews inputs={newsInputs} title="Create New News" /></AdminProtectedRoute>} />
             </Route>
+
+            {/* Rankings */}
+            <Route path="ranking" element={<AdminProtectedRoute><RankUpdate /></AdminProtectedRoute>} />
           </Route>
         </Routes>
       </BrowserRouter>
