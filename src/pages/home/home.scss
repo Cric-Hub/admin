@@ -4,27 +4,40 @@
   .homeContainer {
     flex: 6;
 
-    .widgets,
-    .charts {
-      display: flex;
-      padding: 20px;
+    .cardsContainer {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 20px;
+      padding: 30px;
     }
 
-    .charts {
-      padding: 5px 20px;
-    }
+    .card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 25px;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+      font-size: 20px;
+      transition: all 0.3s ease;
+      height: 180px;
 
-    .listContainer {
-      -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
-      box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
-      padding: 20px;
-      margin: 20px;
+      .icon {
+        font-size: 50px;
+        margin-bottom: 10px;
+        color: #007bff; 
+      }
 
-      .listTitle {
-        font-weight: 500;
-        color: gray;
-        margin-bottom: 15px;
+      &:hover {
+        transform: translateY(-5px);
+        background-color: #f8f9fa;
+        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
       }
     }
   }
