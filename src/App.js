@@ -11,6 +11,7 @@ import NewPlayer from "./pages/systemAdmin/newPlayer/NewPlayer.jsx";
 import NewPlayerByClub from "./pages/clubAdmin/newPlayerByClub/NewPlayerByClub.jsx";
 import NewClub from "./pages/systemAdmin/newClub/NewClub.jsx";
 import NewMatch from "./pages/systemAdmin/newMatch/NewMatch.jsx";
+import NewMatchByClub from "./pages/clubAdmin/newMatchByClub/NewMatchByClub.jsx";
 import NewNews from "./pages/systemAdmin/newNews/NewNews.jsx";
 import UpdateMatch from "./pages/updateMatch/UpdateMatch.jsx";
 import ViewUsers from "./pages/viewUsers/ViewUsers.jsx";
@@ -75,7 +76,7 @@ function App() {
               <Route path="new" element={<AdminProtectedRoute><NewMatch inputs={matchInputs} title="Create New Match" /></AdminProtectedRoute>} />
               <Route path="update/:id" element={<UpdateMatch />} />
               <Route path="by-club/:clubId" element={<ProtectedRoute><MatchList columns={clubMatchColumns} /></ProtectedRoute>} />
-              <Route path="by-club/new" element={<ProtectedRoute><NewMatch inputs={matchInputs} title="Create New Match" /></ProtectedRoute>} />
+              <Route path="by-club/new" element={<ProtectedRoute><NewMatchByClub inputs={matchInputs} title="Create New Match" /></ProtectedRoute>} />
             </Route>
 
             {/* News */}
