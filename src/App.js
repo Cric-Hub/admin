@@ -8,6 +8,7 @@ import MatchList from "./pages/list/MatchList.jsx";
 import Single from "./pages/single/Single.jsx";
 import New from "./pages/systemAdmin/new/New.jsx";
 import NewPlayer from "./pages/systemAdmin/newPlayer/NewPlayer.jsx";
+import NewPlayerByClub from "./pages/clubAdmin/newPlayerByClub/NewPlayerByClub.jsx";
 import NewClub from "./pages/systemAdmin/newClub/NewClub.jsx";
 import NewMatch from "./pages/systemAdmin/newMatch/NewMatch.jsx";
 import NewNews from "./pages/systemAdmin/newNews/NewNews.jsx";
@@ -64,7 +65,7 @@ function App() {
               
               <Route path="new" element={<AdminProtectedRoute><NewPlayer inputs={playerInputs} optionalInputs={optionalInputs} title="Add New Player" /></AdminProtectedRoute>} />
               <Route path="by-club/:clubId" element={<ProtectedRoute><ClubList columns={clubPlayerColumns} /></ProtectedRoute>} />
-              <Route path="by-club/:clubId/new" element={<ProtectedRoute><NewPlayer inputs={playerInputs} title="Add New Player" /></ProtectedRoute>} />
+              <Route path="by-club/:clubId/new" element={<ProtectedRoute><NewPlayerByClub inputs={playerInputs} title="Add New Player" /></ProtectedRoute>} />
             </Route>
 
             {/* Matches */}

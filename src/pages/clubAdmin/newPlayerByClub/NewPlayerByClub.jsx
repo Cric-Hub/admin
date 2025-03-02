@@ -1,70 +1,117 @@
 import "./newPlayerByClub.scss";
-import Sidebar from "../../../components/sidebar/Sidebar.jsx";
-import Navbar from "../../../components/navbar/Navbar.jsx";
+import Sidebar from "../../../components/sidebar/Sidebar";
+import Navbar from "../../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
-import { useState } from "react";
-import useFetch from "../../../hooks/useFetch.js";
+import { useState, useEffect } from "react";
 import axios from "axios";
+import useFetch from "../../../hooks/useFetch";
+import { useToast } from "../../../context/ToastContext";
+import Button from "../../../components/buttons/Button";
 import { useContext } from "react";
-import { AuthContext } from "../../../context/AuthContext.js";
-import Button from "../../../components/buttons/Button.jsx";
+import { AuthContext } from "../../../context/AuthContext";
 
-const NewPlayerByClub = ({ inputs, title }) => {
+const NewPlayerByClub = ({ inputs, title, optionalInputs }) => {
+  const [showOptionalFields, setShowOptionalFields] = useState(false);
+  const [file, setFile] = useState("");
   const [buttonLoading, setButtonLoading] = useState(false);
-const {user} = useContext(AuthContext);
-const [info, setInfo] = useState({});
-const [file, setFile] = useState("");
-const [clubID, setClubID] = useState(undefined);
-const {data, loading, error} = useFetch("http://localhost:8000/api/clubs");
+  const [info, setInfo] = useState({});
+  const { user } = useContext(AuthContext); // Get the logged-in user
+  const [clubName, setClubName] = useState(""); // State to store the club name
+  const showToast = useToast();
+
+  // Fetch the club details using the club ID from the user
+  const { data: clubData, loading: clubLoading, error: clubError } = useFetch(
+    user?.club ? `http://localhost:8000/api/clubs/${user.club}` : ""
+  );
+
+  useEffect(() => {
+    if (clubData) {
+      setClubName(clubData.name); // Set the club name when data is fetched
+    }
+  }, [clubData]);
 
   const handleChange = (e) => {
     setInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  }
-const handleClick = async (e) => {
-  setButtonLoading(true);
-  e.preventDefault();
-  if (!info.name || !clubID) {
-    alert("Please complete all fields!");
-    return;
-  }
-
-  let imageUrl = "";
-  if (file) {
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", "upload");
-
-    try {
-      const uploadRes = await axios.post(
-        "https://api.cloudinary.com/v1_1/hashanthapramod/image/upload",
-        formData
-      );
-      imageUrl = uploadRes.data.url;
-    } catch (err) {
-      console.error("Error uploading image:", err);
-      alert("Image upload failed!");
-      return;
-    }
-  }
-
-  const player = {
-    name: info.name,
-    club: clubID,
-    img: imageUrl,
   };
 
-  try {
-    await axios.post("http://localhost:8000/api/players", player,{ withCredentials: true });
-    alert("Player created successfully!");
-  } catch (err) {
-    console.error("Error creating player:", err);
-    alert("Failed to create player. Please try again.");
-  } finally{
-    setButtonLoading(false);
-  }
-};
+  const toggleOptionalFields = () => {
+    setShowOptionalFields((prev) => !prev); // Toggle visibility
+  };
 
-  console.log(info);
+  const handleClick = async (e) => {
+    e.preventDefault();
+
+    // Validate required fields
+    if (!info.name || !info.role) {
+      showToast("Please complete all required fields!", "warn");
+      return;
+    }
+
+    setButtonLoading(true);
+
+    // Upload image to Cloudinary if a file is selected
+    let imageUrl = "";
+    if (file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "upload");
+
+      try {
+        const uploadRes = await axios.post(
+          "https://api.cloudinary.com/v1_1/hashanthapramod/image/upload",
+          formData
+        );
+        imageUrl = uploadRes.data.url;
+      } catch (err) {
+        console.error("Error uploading image:", err);
+        showToast("Image upload failed!", "error");
+        return;
+      }
+    }
+
+    // Create the player object
+    const player = {
+      ...info,
+      img: imageUrl,
+      club: user.club, // Use the club ID from the logged-in user
+      batting: {
+        matches: info.battingMatches || 0,
+        innings: info.battingInnings || 0,
+        runs: info.battingRuns || 0,
+        ballsFaced: info.battingBallsFaced || 0,
+        highestScore: info.battingHighestScore || 0,
+        notOuts: info.battingNotOuts || 0,
+      },
+      bowling: {
+        matches: info.bowlingMatches || 0,
+        innings: info.bowlingInnings || 0,
+        oversBowled: info.bowlingOversBowled || 0,
+        ballsBowled: info.bowlingBallsBowled || 0,
+        runsConceded: info.bowlingRunsConceded || 0,
+        wickets: info.bowlingWickets || 0,
+      },
+      fielding: {
+        matches: info.fieldingMatches || 0,
+        catches: info.fieldingCatches || 0,
+        runOuts: info.fieldingRunOuts || 0,
+        stumpings: info.fieldingStumpings || 0,
+      },
+    };
+
+    try {
+      // Send the player data to the backend
+      await axios.post("http://localhost:8000/api/players", player, {
+        withCredentials: true,
+      });
+      showToast("Player created successfully!", "success");
+    } catch (err) {
+      console.error("Error creating player:", err);
+      showToast("Failed to create player. Please try again.", "error");
+    } finally {
+      setButtonLoading(false);
+    }
+  };
+
   return (
     <div className="new">
       <Sidebar />
@@ -101,32 +148,74 @@ const handleClick = async (e) => {
               {inputs.map((input) => (
                 <div className="formInput" key={input.id}>
                   <label>{input.label}</label>
-                  <input type={input.type} 
-                  onChange={handleChange}
-                  name={input.label.toLowerCase()} 
-                  id={input.id}
-                  placeholder={input.placeholder} />
+                  {input.type === "select" ? (
+                    <select
+                      name={input.label.toLowerCase()}
+                      onChange={handleChange}
+                      value={info[input.label.toLowerCase()] || ""}
+                    >
+                      <option value="" disabled>
+                        Select {input.label}
+                      </option>
+                      {input.options.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    <input
+                      type={input.type}
+                      placeholder={input.placeholder}
+                      onChange={handleChange}
+                      name={input.label.toLowerCase()}
+                      value={info[input.label.toLowerCase()] || ""}
+                      id={input.id}
+                    />
+                  )}
                 </div>
               ))}
+
+              {/* Display the club name */}
               <div className="formInput">
-                  <label>Select Club</label>
-                  <select id="clubID" onChange={(e) => setClubID(e.target.value)} value={clubID || ""}>
-                    <option value="" disabled>Select a Club</option>
-                    {loading
-                      ? "loading"
-                      : data &&
-                        data.map((club) => (
-                          <option key={club._id} value={club._id}>
-                            {club.name}
-                          </option>
-                        ))}
-                  </select>
-                </div>
+                <label>Club</label>
+                <input
+                  type="text"
+                  value={clubName || "Loading..."}
+                  disabled
+                />
+              </div>
+
+              {/* Toggle button for optional fields */}
+              <button
+                type="button"
+                onClick={toggleOptionalFields}
+                className="toggleButton"
+              >
+                {showOptionalFields ? "Hide Optional Fields" : "Show Optional Fields"}
+              </button>
+
+              {/* Render optional fields if toggled */}
+              {showOptionalFields &&
+                optionalInputs.map((input) => (
+                  <div className="formInput" key={input.id}>
+                    <label>{input.label}</label>
+                    <input
+                      type={input.type}
+                      placeholder={input.placeholder}
+                      onChange={handleChange}
+                      name={input.name}
+                      value={info[input.name] || ""}
+                      id={input.id}
+                    />
+                  </div>
+                ))}
+
               <Button
-                loading={buttonLoading}        
-                text="Create player"          
-                onClick={handleClick}   
-                loadingText="Creating..."     
+                loading={buttonLoading}
+                text="Create"
+                onClick={handleClick}
+                loadingText="Creating..."
               />
             </form>
           </div>
