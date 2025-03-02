@@ -47,18 +47,10 @@ const ViewUsers = () => {
                   <span className="itemValue">{user.email}</span>
                 </div>
                 <div className="detailItem">
-                  <span className="itemKey">Phone:</span>
-                  <span className="itemValue">+1 2345 67 89</span>
-                </div>
-                <div className="detailItem">
                   <span className="itemKey">City:</span>
                   <span className="itemValue">
                     {user.city}
                   </span>
-                </div>
-                <div className="detailItem">
-                  <span className="itemKey">Country:</span>
-                  <span className="itemValue">USA</span>
                 </div>
               </div>
             </div>
