@@ -17,12 +17,24 @@ import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext.js";
+import { useSnackbar } from "notistack";
+import { useConfirmation } from "../../context/ConfirmationContext.js";
 
 const Sidebar = () => {
+  const { enqueueSnackbar } = useSnackbar();
+  const { showConfirmation } = useConfirmation();
   const { user, dispatch } = useContext(AuthContext);
   const { dispatchDarkMode } = useContext(DarkModeContext);
   
-
+  const confirmLogout = (id) => {
+    showConfirmation({
+      message: "Are you sure you want to logout!",
+      onConfirm: () => handleLogout(),
+      onCancel: () => enqueueSnackbar("logout cancelled!", { variant: "info" }),
+      confirmLabel: "Yes, Logout",
+      cancelLabel: "No, StayLoggedin",
+    });
+  };
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
     localStorage.removeItem("user");
@@ -34,7 +46,6 @@ const Sidebar = () => {
           <span className="logo">CricHub</span>
         </Link>
       </div>
-      <hr />
 
       <div className="center">
         <ul>
@@ -116,7 +127,7 @@ const Sidebar = () => {
             <span>Profile</span>
           </li>
           </Link>
-          <li onClick={handleLogout}>
+          <li onClick={confirmLogout}>
             <ExitToAppIcon className="icon" />
             <span>Logout</span>
           </li>
