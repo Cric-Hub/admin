@@ -4,6 +4,8 @@ import "./home.scss";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
+import { useEffect, useState } from "react";
+import useFetch from "../../hooks/useFetch";
 
 // Importing MUI Icons
 import GroupIcon from "@mui/icons-material/Group"; // Users
@@ -16,6 +18,17 @@ import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople"; // My Players
 
 const Home = () => {
   const { user, dispatch } = useContext(AuthContext);
+  const [clubName, setClubName] = useState("");
+
+  const { data: clubData, loading: clubLoading, error: clubError } = useFetch(
+    user?.club ? `http://localhost:8000/api/clubs/${user.club}` : ""
+  );
+
+  useEffect(() => {
+    if (clubData) {
+      setClubName(clubData.name); 
+    }
+  }, [clubData]);
 
   return (
     <div className="home">
@@ -56,7 +69,7 @@ const Home = () => {
 
           {/* Club Section */}
           <div className="section">
-            <h2 className="sectionTitle">Club Admin</h2>
+            <h2 className="sectionTitle">Club Admin : {clubName}</h2>
             <div className="sectionCards">
               <Link to={`/matches/by-club/${user.club}`} className="card">
                 <EventIcon className="icon" />
