@@ -28,6 +28,7 @@ import { DarkModeContext } from "./context/darkModeContext.js";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute.js";
 import AdminProtectedRoute from "./components/protectedRoute/AdminProtectedRoute.js";
 import { clubColumns, userColumns, playerColumns,matchColumns, clubPlayerColumns, clubMatchColumns , newsColumns} from "./datatablesource.js";
+import MatchListByClub from "./pages/list/MatchListByClub.jsx";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function App() {
@@ -75,7 +76,7 @@ function App() {
               <Route path=":matchId" element={<ProtectedRoute><Single /></ProtectedRoute>} />
               <Route path="new" element={<AdminProtectedRoute><NewMatch inputs={matchInputs} title="Create New Match" /></AdminProtectedRoute>} />
               <Route path="update/:id" element={<UpdateMatch />} />
-              <Route path="by-club/:clubId" element={<ProtectedRoute><MatchList columns={clubMatchColumns} /></ProtectedRoute>} />
+              <Route path="by-club/:clubId" element={<ProtectedRoute><MatchListByClub columns={clubMatchColumns} /></ProtectedRoute>} />
               <Route path="by-club/new" element={<ProtectedRoute><NewMatchByClub inputs={matchInputs} title="Create New Match" /></ProtectedRoute>} />
             </Route>
 
