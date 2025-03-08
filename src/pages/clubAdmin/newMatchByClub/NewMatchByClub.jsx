@@ -32,7 +32,8 @@ const NewMatchByClub = ({ inputs, title }) => {
 
   useEffect(() => {
     if (clubData) {
-      setClubName(clubData.name); // Set the club name when data is fetched
+      setClubName(clubData.name);
+      setClub1ID(clubData._id) // Set the club name when data is fetched
     }
   }, [clubData]);
 
