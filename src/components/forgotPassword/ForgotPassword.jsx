@@ -9,12 +9,11 @@ function ForgotPassword() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  // Setting default axios configuration
   axios.defaults.withCredentials = true;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // Set loading state
+    setLoading(true); // Set loading 
     setError(''); // Reset error message
 
     try {
@@ -30,7 +29,7 @@ function ForgotPassword() {
       setError('Something went wrong. Please try again later.');
       console.error("Error:", err);
     } finally {
-      setLoading(false); // Reset loading state
+      setLoading(false); // Reset loading 
     }
   };
 

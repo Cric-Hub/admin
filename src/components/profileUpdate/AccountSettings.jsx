@@ -54,7 +54,7 @@ const AccountSettings = () => {
       }
     }
 
-    // Prepare updated user data
+    //updated user data
     const updatedUser = {
       username: formData.username,
       email: formData.email,

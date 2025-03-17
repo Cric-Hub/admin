@@ -167,7 +167,6 @@ const handleClick = async (e) => {
                 {showOptionalFields ? "Hide Optional Fields" : "Show Optional Fields"}
               </button>
 
-              {/* Render optional fields if toggled */}
               {showOptionalFields &&
                 optionalInputs.map((input) => (
                   <div className="formInput" key={input.id}>

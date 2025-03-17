@@ -6,10 +6,8 @@ import { AuthContext } from "../../context/AuthContext.js";
 const ProtectedRoute = ({ children }) => {
   const { user } = useContext(AuthContext);
   if (!user) {
-    // Redirect to login page if no user
     return <Navigate to="/login" />;
   }
-  // Render the children components (protected route)
   return children;
 };
 

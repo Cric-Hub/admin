@@ -6,8 +6,6 @@ import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
 import { useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch";
-
-// Importing MUI Icons
 import GroupIcon from "@mui/icons-material/Group"; // Users
 import SportsCricketIcon from "@mui/icons-material/SportsCricket"; // Players
 import ArticleIcon from "@mui/icons-material/Article"; // News

@@ -1,4 +1,3 @@
-/* General button styling */
 .lButton {
   padding: 10px 20px;
   font-size: 16px;
@@ -10,18 +9,18 @@
   transition: background-color 0.3s;
 }
 
-/* Button hover state */
+/* Button hover */
 .lButton:hover {
   background-color: #1565c0;
 }
 
-/* Button disabled styling */
+/*  disabled Button */
 .lButton:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
 }
 
-/* Styling when button is in loading state */
+/* Styling when button is in loading */
 .lButton.loading {
   background-color: #0288d1;
 }
