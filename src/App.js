@@ -73,7 +73,7 @@ function App() {
 
             {/* Matches */}
             <Route path="matches">
-              <Route index element={<AdminProtectedRoute><List columns={matchColumns} /></AdminProtectedRoute>} />
+              <Route index element={<AdminProtectedRoute><MatchList columns={matchColumns} /></AdminProtectedRoute>} />
               <Route path=":matchId" element={<ProtectedRoute><Single /></ProtectedRoute>} />
               <Route path="new" element={<AdminProtectedRoute><NewMatch inputs={matchInputs} title="Create New Match" /></AdminProtectedRoute>} />
               <Route path="update/:id" element={<UpdateMatch />} />

@@ -5,12 +5,12 @@ import { Link, useLocation } from "react-router-dom";
 import useFetch from "../../hooks/useFetch.js";
 import axios from "axios";
 
-const DatatableMatch = ({columns}) => {
-  
+const DatatableMatch = ({ columns }) => {
+
   const location = useLocation();
   const path = location.pathname.split("/")[1];
   const [list, setList] = useState([]);
-  const {data, loading, error} = useFetch(`http://localhost:8000/api/${path}`);
+  const { data, loading, error } = useFetch(`http://localhost:8000/api/${path}`);
 
   useEffect(() => {
     setList(data);
@@ -18,12 +18,12 @@ const DatatableMatch = ({columns}) => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/${path}/${id}`,{ withCredentials: true });
+      await axios.delete(`http://localhost:8000/api/${path}/${id}`, { withCredentials: true });
       setList(list.filter((item) => item._id !== id));
     } catch (err) {
-      
+
     }
-    
+
   };
 
   const actionColumn = [
@@ -33,19 +33,19 @@ const DatatableMatch = ({columns}) => {
       width: 200,
       renderCell: (params) => {
         return (
-            <div className="cellAction">
+          <div className="cellAction">
             <Link to={`/matches/update/${params.row._id}`} style={{ textDecoration: "none" }}>
-                <div className="viewButton">Update</div>
+              <div className="viewButton">Update</div>
             </Link>
             <div
-                className="deleteButton"
-                onClick={() => handleDelete(params.row._id)}
+              className="deleteButton"
+              onClick={() => handleDelete(params.row._id)}
             >
-                Delete
+              Delete
             </div>
-            </div>
+          </div>
         );
-        },
+      },
 
     },
   ];
@@ -58,12 +58,24 @@ const DatatableMatch = ({columns}) => {
         </Link>
       </div>
       <DataGrid
-        className="datagrid"
         rows={list}
-        columns={columns.concat(actionColumn)}
+        className="datagrid"
+
+        columns={
+          [
+            { field: "_id", headerName: "ID", width: 120 },
+            {field: "club1", headerName: "club 1", width: 170,
+              valueGetter: (params) => params.row.club1.club.name || "No Club"
+            },
+            {
+              field: "club2", headerName: "club 2", width: 170,
+              valueGetter: (params) => params.row.club2.club.name || "No Club"
+            },
+            ...actionColumn,
+          ]}
         pageSize={9}
         rowsPerPageOptions={[9]}
-        checkboxSelection
+        
         getRowId={row => row._id}
       />
     </div>
