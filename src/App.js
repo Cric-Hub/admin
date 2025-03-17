@@ -3,6 +3,7 @@ import Login from "./pages/login/Login.jsx";
 import ForgotPassword from "./components/forgotPassword/ForgotPassword.jsx";
 import ResetPassword from "./components/resetPassword/ResetPassword.jsx";
 import List from "./pages/list/List.jsx";
+import PlayerList from "./pages/list/PlayerList.jsx";
 import ClubList from "./pages/list/ClubList.jsx";
 import MatchList from "./pages/list/MatchList.jsx";
 import Single from "./pages/single/Single.jsx";
@@ -62,7 +63,7 @@ function App() {
 
             {/* Players */}
             <Route path="players">
-              <Route index element={<AdminProtectedRoute><List columns={playerColumns} /></AdminProtectedRoute>} />
+              <Route index element={<AdminProtectedRoute><PlayerList/></AdminProtectedRoute>} />
               <Route path=":playerId" element={<ProtectedRoute><ViewPlayers /></ProtectedRoute>} />
               
               <Route path="new" element={<AdminProtectedRoute><NewPlayer inputs={playerInputs} optionalInputs={optionalInputs} title="Add New Player" /></AdminProtectedRoute>} />
