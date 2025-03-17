@@ -15,7 +15,7 @@ const NewPlayerByClub = ({ inputs, title, optionalInputs }) => {
   const [file, setFile] = useState("");
   const [buttonLoading, setButtonLoading] = useState(false);
   const [info, setInfo] = useState({});
-  const { user } = useContext(AuthContext); // Get the logged-in user
+  const { user } = useContext(AuthContext);
   const [clubName, setClubName] = useState(""); // State to store the club name
   const showToast = useToast();
 
@@ -195,7 +195,6 @@ const NewPlayerByClub = ({ inputs, title, optionalInputs }) => {
                 {showOptionalFields ? "Hide Optional Fields" : "Show Optional Fields"}
               </button>
 
-              {/* Render optional fields if toggled */}
               {showOptionalFields &&
                 optionalInputs.map((input) => (
                   <div className="formInput" key={input.id}>

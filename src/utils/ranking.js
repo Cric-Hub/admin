@@ -1,4 +1,3 @@
-// utils/rankings.js
 import Player from "../models/Player.js";
 
 const calculateRankings = async () => {

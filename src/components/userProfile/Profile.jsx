@@ -4,7 +4,7 @@ import { AuthContext } from "../../context/AuthContext";
 import "./profile.css";
 
 const Profile = () => {
-  const { user, dispatch } = useContext(AuthContext); // Get dispatch from context
+  const { user, dispatch } = useContext(AuthContext); 
   
 
   return (

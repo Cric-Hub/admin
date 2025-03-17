@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from 'axios';
-import './ResetPassword.css'; // Import the CSS file
+import './ResetPassword.css';
 
 function ResetPassword() {
     const [password, setPassword] = useState("");

@@ -12,7 +12,6 @@ const NewNews = ({ title }) => {
   const [buttonLoading, setButtonLoading] = useState(false);
   const [file, setFile] = useState(null);
   const [info, setInfo] = useState({});
-  const [tags, setTags] = useState("");
   const showToast = useToast();
 
   const handleChange = (e) => {
@@ -43,7 +42,6 @@ const NewNews = ({ title }) => {
       const newNews = {
         ...info,
         image: imageUrl,
-        tags: tags.split(",").map((tag) => tag.trim()), // Split tags by commas
       };
 
       await axios.post("http://localhost:8000/api/news", newNews,{ withCredentials: true });
@@ -51,7 +49,6 @@ const NewNews = ({ title }) => {
 
       // Clear the form fields after submission
       setInfo({});
-      setTags("");
       setFile(null);
     } catch (err) {
       console.log(err);

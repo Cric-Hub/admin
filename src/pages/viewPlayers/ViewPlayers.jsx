@@ -71,9 +71,7 @@ const ViewPlayers = () => {
               </div>
             </div>
           </div>
-          <div className="right">
-            {/* Additional content can go here */}
-          </div>
+          
         </div>
         <div className="bottom">
           <div className="stats-container">

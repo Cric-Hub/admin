@@ -6,7 +6,6 @@ import List from "./pages/list/List.jsx";
 import PlayerList from "./pages/list/PlayerList.jsx";
 import ClubList from "./pages/list/ClubList.jsx";
 import MatchList from "./pages/list/MatchList.jsx";
-import Single from "./pages/single/Single.jsx";
 import New from "./pages/systemAdmin/new/New.jsx";
 import NewPlayer from "./pages/systemAdmin/newPlayer/NewPlayer.jsx";
 import NewPlayerByClub from "./pages/clubAdmin/newPlayerByClub/NewPlayerByClub.jsx";
@@ -57,7 +56,7 @@ function App() {
             {/* Clubs */}
             <Route path="clubs">
               <Route index element={<AdminProtectedRoute><List columns={clubColumns} /></AdminProtectedRoute>} />
-              <Route path=":clubId" element={<ProtectedRoute><Single /></ProtectedRoute>} />
+              <Route path=":clubId" element={<ProtectedRoute></ProtectedRoute>} />
               <Route path="new" element={<AdminProtectedRoute><NewClub inputs={clubInputs} title="Add New Club" /></AdminProtectedRoute>} />
             </Route>
 
@@ -73,8 +72,8 @@ function App() {
 
             {/* Matches */}
             <Route path="matches">
-              <Route index element={<AdminProtectedRoute><MatchList columns={matchColumns} /></AdminProtectedRoute>} />
-              <Route path=":matchId" element={<ProtectedRoute><Single /></ProtectedRoute>} />
+              <Route index element={<AdminProtectedRoute><List columns={matchColumns} /></AdminProtectedRoute>} />
+              <Route path=":matchId" element={<ProtectedRoute></ProtectedRoute>} />
               <Route path="new" element={<AdminProtectedRoute><NewMatch inputs={matchInputs} title="Create New Match" /></AdminProtectedRoute>} />
               <Route path="update/:id" element={<UpdateMatch />} />
               <Route path="by-club/:clubId" element={<ProtectedRoute><MatchListByClub columns={clubMatchColumns} /></ProtectedRoute>} />

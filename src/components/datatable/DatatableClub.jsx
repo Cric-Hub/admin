@@ -66,6 +66,10 @@ const DatatableClub = ({ columns}) => {
         rowsPerPageOptions={[9]}
         checkboxSelection
         getRowId={row => row._id}
+
+        sx={{
+          
+        }}
       />
     </div>
   );
