@@ -59,12 +59,24 @@ const DatatableMatchByClub = ({columns}) => {
         </Link>
       </div>
       <DataGrid
-        className="datagrid"
         rows={list}
-        columns={columns.concat(actionColumn)}
+        className="datagrid"
+
+        columns={
+          [
+            { field: "_id", headerName: "ID", width: 120 },
+            {field: "club1", headerName: "club 1", width: 170,
+              valueGetter: (params) => params.row.club1.club.name || "No Club"
+            },
+            {
+              field: "club2", headerName: "club 2", width: 170,
+              valueGetter: (params) => params.row.club2.club.name || "No Club"
+            },
+            ...actionColumn,
+          ]}
         pageSize={9}
         rowsPerPageOptions={[9]}
-        checkboxSelection
+        
         getRowId={row => row._id}
       />
     </div>
